@@ -9,11 +9,12 @@ Dans le cadre de l'UE M2M, nous avons été emmennés à mettre en place une inf
 * Capteur de gaz
 * Carte SD 
 * Jumpeurs
-Le projet est composé des deux parties:
+
+Le projet est composé des deux parties :
 * **Partie1 ** : dans cette partie toute l'infrastructure tourne dans un seul PC.
 * **Partie2 ** : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
 
-## Partie 1 ##  
+## Partie 1 
 
 Comme indiqué plus haut, dans cette partie toute l'infrastructure tourne dans un seul PC donc il nous faut une sketch arduino pour pouvoir recupérer les données du capteur de gaz. Cette sketch se trouve dans le dossier **partie/sketchArduino**. 
 
@@ -30,6 +31,8 @@ Les items et la régle se trouvent dans le répertoire **/partie1/openhab**
 * **Serveur mosquitto:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
 * **mqtt-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
 * **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
+
+#Mise en place
 
 
 
