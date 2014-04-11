@@ -10,10 +10,10 @@ Dans le cadre de l'UE M2M, nous avons été emmennés à mettre en place une inf
 * Carte SD 
 * Jumpeurs
 Le projet est composé des deux parties:
-* **Partie1 : dans cette partie toute l'infrastructure tourne dans un seul PC.
-* **Partie2 : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
+* **Partie1 ** : dans cette partie toute l'infrastructure tourne dans un seul PC.
+* **Partie2 ** : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
 
-## Partie 1##  
+## Partie 1 ##  
 
 Comme indiqué plus haut, dans cette partie toute l'infrastructure tourne dans un seul PC donc il nous faut une sketch arduino pour pouvoir recupérer les données du capteur de gaz. Cette sketch se trouve dans le dossier **partie/sketchArduino**. 
 
