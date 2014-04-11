@@ -28,7 +28,10 @@
 	
         var livingTemp = new Array();
         var basementTemp = new Array();
-        var socket = io.connect('http://169.254.100.228:3000');
+	//Pour la partie2, il faut utiliser l'ip de la carte comme host
+        //var socket = io.connect('http://169.254.100.228:3000');
+	//Pour la partie1, le host c'est localhost puisque tous les serveurs tournent dans le même PC.
+	var socket = io.connect('http://localhost');
             socket.on('connect', function () {
                 socket.on('mqtt', function (msg) {
                     console.log(msg.topic, msg.payload);
