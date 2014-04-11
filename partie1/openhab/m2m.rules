@@ -1,0 +1,12 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+
+rule "capteur_gaz on update"
+	when 
+		Item capteur_gaz received update
+	then
+		postUpdate(message_MQTT, capteur_gaz.state)
+end
+

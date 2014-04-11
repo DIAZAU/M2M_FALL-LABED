@@ -1,0 +1,7 @@
+sitemap m2m label="M2M FALL & LABED"
+{
+  	Frame {
+		Text item=capteur_gaz 
+
+	}
+}
