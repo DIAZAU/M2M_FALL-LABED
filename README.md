@@ -11,14 +11,14 @@ Dans le cadre de l'UE M2M, nous avons été emmennés à mettre en place une inf
 * Jumpeurs
 
 Le projet est composé des deux parties :
-* **Partie1 ** : dans cette partie toute l'infrastructure tourne dans un seul PC.
-* **Partie2 ** : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
+* Partie1 : dans cette partie toute l'infrastructure tourne dans un seul PC.
+* Partie2 : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
 
 Avant de commencer, il nous a fallu mettre à jour le firmware de notre Intel Galileo. Pour celà, nous avons suivi les instructions disponibles à l'adresse suivante: http://air.imag.fr/images/2/29/Galileo_GettingStarted.pdf .
 
 ## Partie 1 
 
-Comme indiqué plus haut, dans cette partie toute l'infrastructure tourne dans un seul PC donc il nous faut une sketch arduino pour pouvoir recupérer les données du capteur de gaz. Cette sketch se trouve dans le dossier **partie/sketchArduino**. 
+Comme indiqué plus haut, dans cette partie toute l'infrastructure tourne dans un seul PC donc il nous faut une sketch arduino pour pouvoir recupérer les données du capteur de gaz. Cette sketch se trouve dans le dossier **partie1/sketchArduino**. 
 
 Une fois l'sketch téléversée dans la carte, nous passons à la mise en place des serveurs permettant de recupérer les données. L'infrastructure imaginée est representée ci-dessous:
 
@@ -35,7 +35,7 @@ Les items et la régle se trouvent dans le répertoire **/partie1/openhab**
 * **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
 
 ###Mise en place
-TO DO
+Pour faire fonctionner notre infrastructure, il faut obligatoirement démarrer tous les serveurs décrits plus haut et serveiller à ce que le port USB au niveau de l'item binding serial de openHab soit bien soit bien present dans **/dev/ttyAMC[0..9]**. 
 
 
 ##Partie 2
@@ -56,19 +56,22 @@ Puis nous avons décompressé l'OS Clanton sur une carte SD, en prévision d'uti
 
 L'Intel Galileo bootera automatiquement sur la version de Clanton que vous aurez installé et puis nous recupérons l'adresse ip de la carte en utilisant wireshark puisque nous ne pouvons plus accéder à la carte avec le port usb host. 
 L'infrastructure imaginée est representée ci-dessous:
-
 ![alt tag](https://github.com/DevYourWorld/Master2-M2M/blob/master/etc/infrastructure.png?raw=true)
 
+Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell (gpio) et puis publier les données par des messages mqtt. Nous reviendrons sur cet script plus loin.
 
 Les manipulations à venir se feront directement sur notre carte Intel Galileo via SSH (ou autre protocol).
 
-Afin de communiquer via mosquitto, nous avons dut téléchargez la [dernière version de mosquitto](http://mosquitto.org/download/) et puis compiler une version de ce dernier avec les commandes make et make install. 
+Afin de communiquer via mosquitto, nous avons dut téléchargez la [dernière version de mosquitto](http://mosquitto.org/download/) et puis compiler cette derniére avec les commandes make et make install. 
 
 
-La principale difficulté ensuite a résidé dans le fait qu'il nous était impossible d'utiliser un sketch arduino standard en même temps que le Galileo était sous Clanton. Nous avons donc dut nous documenter afin de récupérer les entrées/sorties de l'Intel Galileo sous Clanton et les traiter via un script shell. Cet script se trouve dans le repertoire **partie2/**
+La principale difficulté ensuite a résidé dans le fait qu'il nous était impossible d'utiliser un sketch arduino standard en même temps que le Galileo était sous Clanton. Nous avons donc dut nous documenter afin de récupérer les entrées/sorties de l'Intel Galileo sous Clanton et les traiter via un script shell. Cet script se trouve dans le repertoire **partie2/** et est decrit comme suit :
+ 
+(https://github.com/DIAZAU/M2M_FALL-LABED/tree/master/partie2/m2m.sh)
+
 Pour mieux comprendre le fonctionnement de ce script, nous vous invitons à consulter le site [malinov.com](http://www.malinov.com/Home/sergey-s-blog/intelgalileo-programminggpiofromlinux) qui nous a aidé à récupérer les entrées/sorties désirées de l'Intel Galileo.
 
-**ATTENTION:** Pour que celui-ci fonctionne, vous devrez impérativement brancher votre détecteur de fumée sur l'entrée analogique 0 (A0) de votre Intel Galileo. 
+**ATTENTION:** Pour que celui-ci fonctionne, vous devrez impérativement brancher votre détecteur de gaz sur l'entrée analogique 0 (A0) de votre Intel Galileo. 
 Afin de ne pas griller votre carte, nous vous invittons à respecter le schéma suivant:
 
 ![alt tag](https://github.com/DevYourWorld/Master2-M2M/blob/master/etc/branchements.png?raw=true)
