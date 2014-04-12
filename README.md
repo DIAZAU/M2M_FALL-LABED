@@ -67,7 +67,7 @@ Afin de communiquer via mosquitto, nous avons dut téléchargez la [dernière ve
 
 La principale difficulté ensuite a résidé dans le fait qu'il nous était impossible d'utiliser un sketch arduino standard en même temps que le Galileo était sous Clanton. Nous avons donc dut nous documenter afin de récupérer les entrées/sorties de l'Intel Galileo sous Clanton et les traiter via un script shell. Cet script se trouve dans le repertoire **partie2/** et est decrit comme suit :
  
-(https://github.com/DIAZAU/M2M_FALL-LABED/tree/master/partie2/m2m.sh)
+[script shell](https://github.com/DIAZAU/M2M_FALL-LABED/tree/master/partie2/m2m.sh)
 
 Pour mieux comprendre le fonctionnement de ce script, nous vous invitons à consulter le site [malinov.com](http://www.malinov.com/Home/sergey-s-blog/intelgalileo-programminggpiofromlinux) qui nous a aidé à récupérer les entrées/sorties désirées de l'Intel Galileo.
 
