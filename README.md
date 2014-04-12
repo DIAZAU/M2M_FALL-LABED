@@ -1,10 +1,10 @@
-M2M_FALL-LABED
+Autheurs : Birahima FALL & Sami LABED
 ==============
 
 # Projet M2M de Master 2 #
 
 ## Introduction ##
-Dans le cadre de l'UE M2M, nous avons été emmennés à mettre en place une infrastructure de collecte de données depuis des capteurs à l'aide d'une carte de type Intel galileo. Pour cela, le matériel mis à notre disposition est:
+Dans le cadre de la deuxiéme partie de l'UE M2M, nous avons été emmennés à mettre en place une infrastructure de collecte de données depuis des capteurs à l'aide d'une carte de type Intel galileo. Pour cela, le matériel mis à notre disposition est:
 * Carte Intel Galileo
 * Capteur de gaz
 * Carte SD 
