@@ -22,16 +22,16 @@ Comme indiqué plus haut, dans cette partie toute l'infrastructure tourne dans u
 
 Une fois l'sketch téléversée dans la carte, nous passons à la mise en place des serveurs permettant de recupérer les données. L'infrastructure imaginée est representée ci-dessous:
 
-![alt tag](https://github.com/DevYourWorld/Master2-M2M/blob/master/etc/infrastructure.png?raw=true)
+![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie1.jpg?raw=true)
 
 
 
 Expliquons brievement le rôle joué par chacune des briques visibles sur ce schéma:
 
-* **openHAB:** c'est à partir de là que nous recupérons les données provenant de la carte Galileo. Pour se faire, nous avons mis en place un item binding serial pour pouvoir recupérer les données. Une fois cela fait, nous allons transmettre les données par des messages MQTT l'aide d'un item binding mqtt et une régle.
+* **openHab:** c'est à partir de là que nous recupérons les données provenant de la carte Galileo. Pour se faire, nous avons mis en place un item binding serial pour pouvoir recupérer les données. Une fois cela fait, nous allons transmettre les données par des messages MQTT l'aide d'un item binding mqtt et une régle.
 Les items et la régle se trouvent dans le répertoire **/partie1/openhab** 
-* **Serveur mosquitto:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
-* **mqtt-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
+* **Serveur MQTT:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
+* **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
 * **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
 
 ###Mise en place
@@ -56,7 +56,7 @@ Puis nous avons décompressé l'OS Clanton sur une carte SD, en prévision d'uti
 
 L'Intel Galileo bootera automatiquement sur la version de Clanton que vous aurez installé et puis nous recupérons l'adresse ip de la carte en utilisant wireshark puisque nous ne pouvons plus accéder à la carte avec le port usb host. 
 L'infrastructure imaginée est representée ci-dessous:
-![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie1.jpg?raw=true)
+![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie2.jpg?raw=true)
 
 Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell (gpio) et puis publier les données par des messages mqtt. Nous reviendrons sur cet script plus loin.
 
@@ -73,5 +73,5 @@ Pour mieux comprendre le fonctionnement de ce script, nous vous invitons à cons
 **ATTENTION:** Pour que celui-ci fonctionne, vous devrez impérativement brancher votre détecteur de gaz sur l'entrée analogique 0 (A0) de votre Intel Galileo. 
 Afin de ne pas griller votre carte, nous vous invittons à respecter le schéma suivant:
 
-![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie2.jpg?raw=true)
+![alt tag](https://github.com/DevYourWorld/Master2-M2M/blob/master/etc/branchements.png?raw=true)
 
