@@ -4,7 +4,7 @@ Autheurs : Birahima FALL & Sami LABED
 # Projet M2M de Master 2 #
 
 ## Introduction ##
-Dans le cadre de la deuxiéme partie de l'UE M2M, nous avons été emmennés à mettre en place une infrastructure basée sur l'internet des choses consistant à collecte de données depuis des capteurs à l'aide d'une carte de type Intel galileo. Pour cela, le matériel mis à notre disposition est:
+Dans le cadre de la deuxiéme partie de l'UE M2M, nous avons été emmennés à mettre en place un service basé sur l'internet des choses consistant à collecte de données depuis des capteurs à l'aide d'une carte de type Intel galileo. Pour cela, le matériel mis à notre disposition est:
 * Carte Intel Galileo
 * Capteur de gaz
 * Carte SD 
@@ -14,7 +14,7 @@ Le projet est composé des deux parties :
 * Partie1 : dans cette partie toute l'infrastructure tourne dans un seul PC.
 * Partie2 : dans celle-ci nous allons déployés toute l'infrastructure dans la carte.
 
-Avant de commencer, il nous a fallu mettre à jour le firmware de notre Intel Galileo. Pour celà, nous avons suivi les instructions disponibles à l'adresse suivante: http://air.imag.fr/images/2/29/Galileo_GettingStarted.pdf .
+Avant de commencer, il nous a fallu installer et mettre à jour le firmware de notre Intel Galileo. Pour celà, nous avons suivi les instructions disponibles à l'adresse suivante: http://air.imag.fr/images/2/29/Galileo_GettingStarted.pdf .
 
 ## Partie 1 
 
@@ -46,13 +46,15 @@ Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 		    });
 		});
 
-Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
-* **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
+	Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
+	Les fichiers de mqtt-panel se trouvent dans le répertoire **partie1/mqtt-panel**. 
+ 
+* **MongoDB:** Serveur de base de donnée enregistrant tous les évènements liés aux capteurs. Pour cela, nous inserons une collections à chaque reception de données provenant de la carte dans la base **test** déja présent dans le serveur mongodb.  Ce processus est déja decrit dans le code du serveur mqtt-panel.
 
 Pour faire fonctionner notre infrastructure, il faut obligatoirement démarrer tous les serveurs décrits plus haut et serveiller à ce que le port USB au niveau de l'item binding serial de openHab soit bien celui present dans **/dev/ttyAMC[0..9]**. 
 
 ###Difficultés
-Comme nous n'avons jamais utilisés MQTT, nous avions au debut des problémes de pouvoir envoyer et de recevoir des données par des messages MQTT. Mais aprés quelques recherches sur les forums et notamment dans site de [mosquitto](http://mosquitto.org/), nous avons compris le fonctionnement du protocole et enfin envoyer et recevoir des messages MQTT. 
+Comme nous n'avons jamais utilisés MQTT, nous avions au debut des problémes de pouvoir envoyer et de recevoir des données par des messages MQTT. Mais aprés quelques recherches sur les forums et notamment dans site de [mosquitto](http://mosquitto.org/), nous avons compris le fonctionnement du protocole et enfin envoyer et recevoir des messages MQTT. L'autre difficulté, si s'en est une, était liée à l'utilisation de openHab mais heureusement le wiki de openHab est tellement bien documenter qu'on avait trés rapidement trouvé la solution recherchée. 
 
 
 ##Partie 2
