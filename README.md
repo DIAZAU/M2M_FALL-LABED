@@ -25,10 +25,10 @@ Une fois l'sketch téléversée dans la carte, nous passons à la mise en place 
 
 
 Dans ce schema, nous pouvons remarqués entre autre : 
-* **openHab:** c'est à partir de là que nous recupérons les données provenant de la carte Galileo. Pour se faire, nous avons mis en place un [item binding serial](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.items) pour pouvoir recupérer les données provenant de la carte. Une fois cela fait, nous allons transmettre les données par des messages MQTT l'aide d'un item binding mqtt et une [régle](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.rules).
+* **openHab:** c'est à partir de [openhab](http://www.openhab.org/) que nous recupérons les données provenant de la carte Galileo. Pour se faire, nous avons mis en place un [item binding serial](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.items) pour pouvoir recupérer les données provenant de la carte. Une fois cela fait, nous allons transmettre les données par des messages MQTT l'aide d'un item binding mqtt et une [régle](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.rules).
 Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 * **Serveur MQTT:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
-* **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 	
+* **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de [mqtt-panel](https://github.com/fabaff/mqtt-panel) pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 	
 	**Serveur mqtt-panel :**
 	
 		mqttclient.on('message', function(topic, payload) {
@@ -46,15 +46,15 @@ Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 		    });
 		});
 
-	Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
+	Ainsi le client mqtt-panel peut de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
 	Les fichiers de mqtt-panel se trouvent dans le répertoire **partie1/mqtt-panel**. 
  
-* **MongoDB:** Serveur de base de donnée enregistrant tous les évènements liés aux capteurs. Pour cela, nous inserons une collections à chaque reception de données provenant de la carte dans la base **test** déja présent dans le serveur mongodb.  Ce processus est déja decrit dans le code du serveur mqtt-panel.
+* **MongoDB:** Nous avons utilisés [mongodb](https://www.mongodb.org/) comme serveur de base de donnée enregistrant tous les évènements liés aux capteurs. Pour cela, nous inserons une collections à chaque reception de données provenant de la carte dans la base **test** déja présent dans le serveur mongodb.  Ce processus est déja decrit dans le code du serveur mqtt-panel.
 
 Pour faire fonctionner notre infrastructure, il faut obligatoirement démarrer tous les serveurs décrits plus haut et serveiller à ce que le port USB au niveau de l'item binding serial de openHab soit bien celui present dans **/dev/ttyAMC[0..9]**. 
 
 ###Difficultés
-Comme nous n'avons jamais utilisés MQTT, nous avions au debut des problémes de pouvoir envoyer et de recevoir des données par des messages MQTT. Mais aprés quelques recherches sur les forums et notamment dans site de [mosquitto](http://mosquitto.org/), nous avons compris le fonctionnement du protocole et enfin envoyer et recevoir des messages MQTT. L'autre difficulté, si s'en est une, était liée à l'utilisation de openHab mais heureusement le wiki de openHab est tellement bien documenter qu'on avait trés rapidement trouvé la solution recherchée. 
+Comme nous n'avons jamais utilisés MQTT, nous avions au debut des problémes de pouvoir envoyer et de recevoir des données par des messages MQTT. Mais aprés quelques recherches sur les forums et notamment dans site de [mosquitto](http://mosquitto.org/), nous avons compris le fonctionnement du protocole et enfin envoyer et recevoir des messages MQTT. L'autre difficulté, si s'en est une, était liée à l'utilisation de openHab mais heureusement le wiki de openHab est tellement bien documenté qu'on avait trés rapidement trouvé la solution recherchée. 
 
 
 ##Partie 2
@@ -74,24 +74,28 @@ Dans cette partie, toute l'infrastructure est deplacée dans la carte donc nous 
 Puis nous avons décompressé l'OS Clanton sur une carte SD, en prévision d'utiliser MQTT sur l'Intel Galileo nous avons utilisé la version "Yocto Project Linux image w/ Clanton-full kernel + general SDKs + Oracle JDK 8 + Tomcat", mais une version moins complète (du moins sans Java), devrai suffire. Clanton est téléchargeable à l'adresse suivante: http://ccc.ntu.edu.tw/index.php/en/news/40 .
 
 L'Intel Galileo bootera automatiquement sur la version de Clanton que vous aurez installé et puis nous recupérons l'adresse ip de la carte en utilisant wireshark puisque nous ne pouvons plus accéder à la carte avec le port usb host. 
-L'infrastructure imaginée est representée ci-dessous:
+L'architecture imaginée est representée ci-dessous:
 ![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie2.jpg?raw=true)
 
-Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell (gpio) et puis publier les données par des messages mqtt. Nous reviendrons sur cet script plus loin.
+Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell (gpio) bien expliqué [ici](http://www.malinov.com/Home/sergey-s-blog) et puis publier les données par des messages mqtt. Nous reviendrons sur cet script plus loin. Les autres serveurs présents dans ce schema sont les même que ceux déja utilisés dans la partie 1.  
 
-Les manipulations à venir se feront directement sur notre carte Intel Galileo via SSH (ou autre protocol).
+Les manipulations à venir se feront directement sur notre carte Intel Galileo via SSH.
 
 Afin de communiquer via mosquitto, nous avons dut téléchargez la [dernière version de mosquitto](http://mosquitto.org/download/) et puis compiler cette derniére avec les commandes make et make install. 
 
+Une fois l'architecture mise en place, il faut trouvé un moyen de recevoir les données du capteur sans utiliser une scketch arduino. Pour cela nous avons utilisés un script shell permettant de demarrer tous les serveurs necessaire, ensuite de lire les valeurs envoyées par le capteur et enfin envoyé la valeur recu par un message MQTT. Cet [script shell](https://github.com/DIAZAU/M2M_FALL-LABED/tree/master/partie2/m2m.sh) se trouve dans le repertoire **partie2/**.
 
-La principale difficulté ensuite a résidé dans le fait qu'il nous était impossible d'utiliser un sketch arduino standard en même temps que le Galileo était sous Clanton. Nous avons donc dut nous documenter afin de récupérer les entrées/sorties de l'Intel Galileo sous Clanton et les traiter via un script shell. 
-Cet [script shell](https://github.com/DIAZAU/M2M_FALL-LABED/tree/master/partie2/m2m.sh) se trouve dans le repertoire **partie2/**.
 
 **ATTENTION:** Pour que celui-ci fonctionne, nous devons impérativement brancher notre capteur de gaz sur l'entrée analogique 0 (A0) de la carte intel Galileo présenter comme suit:
 
 ![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/CroquisSketchArduino.jpg?raw=true)
 
+###Difficultés
+Ici, la principale difficulté était liée à la lecture des données du capteur sans sketch. Mais aprés quelques recherches sur le site de [air](http://air.imag.fr/index.php/Main_Page) et notamment sur les forums, nous avons trés rapidement contournés la difficultés. 
+
 ##Conclusion
 Dans ce projet, nous avons pu mettre en place deux infrastructures permettant de collecter des données issues d'un capteur de gaz. Par soucis de temps, nous avons juste affichés les données dans une page web mais nous pourrions par exemple envoyés des commandes vers openHab permettant d'ouvrir  toutes les fénétres dés que le niveau de gaz atteint un seuil bien défini.
-Par ailleurs, ce projet nous a permis de découvrir des technologies de pointes permettant de mettre en places des infrastructures basées sur l'internet des choses.
+Par ailleurs, ce projet nous a permis de découvrir des technologies de pointes permettant de mettre en places des services basées sur l'internet des choses.
+
+
 
