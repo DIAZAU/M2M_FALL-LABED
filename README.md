@@ -28,21 +28,22 @@ Dans ce schema, nous pouvons remarqués entre autre :
 * **openHab:** c'est à partir de là que nous recupérons les données provenant de la carte Galileo. Pour se faire, nous avons mis en place un [item binding serial](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.items) pour pouvoir recupérer les données provenant de la carte. Une fois cela fait, nous allons transmettre les données par des messages MQTT l'aide d'un item binding mqtt et une [régle](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/partie1/openhab/m2m.rules).
 Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 * **Serveur MQTT:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
-* **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 		
-	mqttclient.on('message', function(topic, payload) {
-	    io.sockets.emit('mqtt',
-		{'topic'  : topic,
-		 'payload' : payload
-		}
-	    );
-	    //insertion du niveau de gaz dans une collection à une date donnée.
-	    date = new Date();
-	    MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-	    	if(err) throw err;
-		var collection = db.collection('m2m');
-		collection.insert({mesure_gaz:gaz, date:date.toGMTString() })
-	    });
-	});
+* **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 	
+	**Serveur mqtt-panel :**	
+		mqttclient.on('message', function(topic, payload) {
+		    io.sockets.emit('mqtt',
+			{'topic'  : topic,
+			 'payload' : payload
+			}
+		    );
+		    //insertion du niveau de gaz dans une collection à une date donnée.
+		    date = new Date();
+		    MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+		    	if(err) throw err;
+			var collection = db.collection('m2m');
+			collection.insert({mesure_gaz:gaz, date:date.toGMTString() })
+		    });
+		});
 
 Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
 * **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
