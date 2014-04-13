@@ -29,20 +29,20 @@ Dans ce schema, nous pouvons remarqués entre autre :
 Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 * **Serveur MQTT:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
 * **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 		
-		mqttclient.on('message', function(topic, payload) {
-		    io.sockets.emit('mqtt',
-			{'topic'  : topic,
-			 'payload' : payload
-			}
-		    );
-		    //insertion du niveau de gaz dans une collection à une date donnée.
-		    date = new Date();
-		    MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-		    	if(err) throw err;
-			var collection = db.collection('m2m');
-			collection.insert({mesure_gaz:gaz, date:date.toGMTString() })
-		    });
-		});
+	mqttclient.on('message', function(topic, payload) {
+	    io.sockets.emit('mqtt',
+		{'topic'  : topic,
+		 'payload' : payload
+		}
+	    );
+	    //insertion du niveau de gaz dans une collection à une date donnée.
+	    date = new Date();
+	    MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+	    	if(err) throw err;
+		var collection = db.collection('m2m');
+		collection.insert({mesure_gaz:gaz, date:date.toGMTString() })
+	    });
+	});
 
 Le client mqtt-panel permet de visualiser via une interface web l'état actuel de l'infrastructure (le niveau de gaz). 
 * **MongoDB:** Base de donnée enregistrant tous les évènements liés aux capteurs.
