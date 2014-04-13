@@ -91,7 +91,7 @@ Une fois l'architecture mise en place, il faut trouvé un moyen de recevoir les 
 ![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/CroquisSketchArduino.jpg?raw=true)
 
 ###Difficultés
-Ici, la principale difficulté était liée à la lecture des données du capteur sans sketch. Mais aprés quelques recherches sur le site de [air](http://air.imag.fr/index.php/Main_Page) et notamment sur les forums, nous avons trés rapidement contournés la difficultés. 
+Ici, la principale difficulté était liée à la lecture des données du capteur sans sketch. Mais aprés quelques recherches sur le site de [air](http://air.imag.fr/index.php/Main_Page) et notamment sur les forums, nous avons trés rapidement contournés la difficulté. 
 
 ##Conclusion
 Dans ce projet, nous avons pu mettre en place deux infrastructures permettant de collecter des données issues d'un capteur de gaz. Par soucis de temps, nous avons juste affichés les données dans une page web mais nous pourrions par exemple envoyés des commandes vers openHab permettant d'ouvrir  toutes les fénétres dés que le niveau de gaz atteint un seuil bien défini.
