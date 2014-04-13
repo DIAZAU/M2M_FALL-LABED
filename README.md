@@ -29,7 +29,8 @@ Dans ce schema, nous pouvons remarqués entre autre :
 Les items et la régle se trouvent dans le répertoire **/partie1/openhab** .
 * **Serveur MQTT:** c'est un serveur standart mqtt permettant à l'entité **openHAB** de publier les données recuperées. 
 * **Serveur MQTT-panel:** Ici, nous avons modifiés de serveur de mqtt-panel pour que celui enregistre les données dans une base de données mongodb avant d'envoyer ces données au client mqtt-panel en utilisant les sockets comme protocole de communication. La modification apportée au serveur mqtt-panel est présentée comme suit : 	
-	**Serveur mqtt-panel :**	
+	**Serveur mqtt-panel :**
+	
 		mqttclient.on('message', function(topic, payload) {
 		    io.sockets.emit('mqtt',
 			{'topic'  : topic,
