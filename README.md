@@ -77,7 +77,7 @@ L'Intel Galileo bootera automatiquement sur la version de Clanton que vous aurez
 L'architecture imaginée est representée ci-dessous:
 ![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/Partie2.jpg?raw=true)
 
-Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell (gpio) bien expliqué [ici](http://www.malinov.com/Home/sergey-s-blog) et puis publier les données par des messages mqtt. Nous reviendrons sur cet script plus loin. Les autres serveurs présents dans ce schema sont les même que ceux déja utilisés dans la partie 1.  
+Ici nous n'avons pas jugés necessaire d'utiliser openHab. En effet pour recuperer les données, nous avons utilisés un script shell **m2m.sh** et puis publier les données par des messages mqtt. Ces données sont recues par un serveur mqtt-panel et puis envoyées par socket de la carte vers un PC ou un client mqtt-panel est entrain de tourner. Les autres serveurs présents dans ce schema sont les même que ceux déja utilisés dans la partie 1.
 
 Les manipulations à venir se feront directement sur notre carte Intel Galileo via SSH.
 
