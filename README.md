@@ -100,10 +100,10 @@ Dans ce projet, nous avons pu mettre en place deux infrastructures permettant de
 Par ailleurs, ce projet nous a permis de découvrir des technologies de pointes permettant de mettre en places des services basées sur l'internet des choses.
 
 ##Annexe
-*L'affichage des données est présenté comme suit : 
+* L'affichage des données est présenté comme suit : 
 	![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/resultat.png?raw=true)
 
-* Nombre de lignes de codes produit : 
+* Nombre de lignes de codes produites : 
 	* **client mqtt-panel :** 79 lignes
 	* **serveur mqtt-panel :** 46 lignes
 	* **openHab :** 11 lignes
