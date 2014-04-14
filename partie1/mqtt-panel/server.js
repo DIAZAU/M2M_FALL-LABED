@@ -9,9 +9,10 @@ var date;
 
 var mqtt = require('mqtt');
 var socket = require('socket.io');
-
+//var firmata = require('firmata');
 
 var mqttbroker = 'localhost';
+//var mqttbroker = '169.254.100.228';
 var mqttport = 1883;
 
 var io = socket.listen(3000);
@@ -34,11 +35,66 @@ mqttclient.on('message', function(topic, payload) {
          'payload' : payload
         }
     );
-    //insertion du niveau de gaz dans une collection à une date donnée.
     date = new Date();
     MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
     	if(err) throw err;
-	var collection = db.collection('m2m');
-	collection.insert({mesure_gaz:gaz, date:date.toGMTString() })
+	db.collection('m2m').insert({mesure_gaz : payload, dates : date.toGMTString()}, function(err, records) {
+		if (err) throw err;
+		console.log("une ligne ajoutee: "+records[0]._id);
+	});
     });
 });
+
+
+
+// Setup the arduino
+//var board = new firmata.Board('/dev/ttyACM0', function(err) {
+//    if (err) {
+//        console.log(err);
+//        return;
+//    }
+
+//    board.pinMode(0, board.MODES.INPUT);
+//    board.pinMode(1, board.MODES.INPUT);
+//    board.pinMode(2, board.MODES.INPUT);
+//    board.pinMode(5, board.MODES.INPUT);
+
+//    // Analog pin 0
+//    var oldVal1;
+//    board.analogRead(0, function(val) {
+//        // Reduce the amount of messages
+//        if (val != oldVal1 && val != oldVal1 + 1 && val != oldVal1 - 1) {
+//            mqttclient.publish('home/living/temp', String(val));
+//        }
+//        oldVal1 = val;
+//    });
+
+//    // Analog pin 5
+//    var oldVal1;
+//    board.analogRead(5, function(val) {
+//        // Reduce the amount of messages
+//        if (val != oldVal1 && val != oldVal1 + 1 && val != oldVal1 - 1) {
+//            mqttclient.publish('home/basement/temp', String(val));
+//        }
+//        oldVal1 = val;
+//    });
+
+//    // Digital pin 2
+//    board.digitalRead(2, function(val) {
+//        mqttsend('home/front/door', val);
+//    });
+
+//    // Digital pin 3
+//    board.digitalRead(3, function(val) {
+//        mqttsend('home/back/door', val);
+//    });
+//});
+
+//function mqttsend(topic, val) {
+//    if (val == 1) {
+//        state = 'true';
+//    } else {
+//        state = 'false';
+//    }
+//    mqttclient.publish(topic, state);
+//};

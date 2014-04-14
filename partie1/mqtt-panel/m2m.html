@@ -28,17 +28,21 @@
 	
         var livingTemp = new Array();
         var basementTemp = new Array();
-	//Pour la partie2, il faut utiliser l'ip de la carte comme host
         //var socket = io.connect('http://169.254.100.228:3000');
-	//Pour la partie1, le host c'est localhost puisque tous les serveurs tournent dans le même PC.
-	var socket = io.connect('http://localhost');
+	var socket = io.connect('http://localhost:3000');
             socket.on('connect', function () {
                 socket.on('mqtt', function (msg) {
                     console.log(msg.topic, msg.payload);
 		    $('#basementTempSensor').html('(Sensor gaz value: ' + msg.payload + ')');
-		    
-		    $('#basementTempLabel').text(msg.payload + ' - normal');
-                    $('#basementTempLabel').removeClass('label-danger label-warning label-info label-primary').addClass('label-success');
+		    if (msg.payload <= 25) {
+			    $('#basementTempLabel').text(msg.payload + ' normal');
+		            $('#basementTempLabel').removeClass('label-danger label-warning label-info label-primary').addClass('label-success');
+		    } 
+		    else{
+			    $('#basementTempLabel').text(msg.payload + ' danger');
+		            $('#basementTempLabel').removeClass('label-danger label-warning label-success label-primary').addClass('label-danger');
+			}
+
 		    $('.basementTempSparkline').sparkline(basementTemp, {
 			type: 'line',
 			width: '160',
