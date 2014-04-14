@@ -100,7 +100,7 @@ Dans ce projet, nous avons pu mettre en place deux infrastructures permettant de
 Par ailleurs, ce projet nous a permis de découvrir des technologies de pointes permettant de mettre en places des services basées sur l'internet des choses.
 
 ##Annexe
-![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/resultat.jpg?raw=true)
+![alt tag](https://github.com/DIAZAU/M2M_FALL-LABED/blob/master/resultat.png?raw=true)
 
 
 
