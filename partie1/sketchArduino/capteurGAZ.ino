@@ -1,10 +1,8 @@
 int sensorValue;
-
 void setup()
 {
   Serial.begin(9600);   
 }
-
 void loop()
 {
   analogReadResolution(10);
